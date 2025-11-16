@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>دعوة</title>
+
+    <style>
+      :root {
+        --card-bg: #fff;
+        --page-bg: #f3f4f6;
+        --accent: #2f855a;
+        --danger: #d9534f;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: "Segoe UI", Roboto, "Noto Naskh Arabic", Arial, sans-serif;
+        background: var(--page-bg);
+        color: #222;
+      }
+      .wrap {
+        min-height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 36px;
+      }
+      .card {
+        width: 360px;
+        max-width: 94%;
+        background: var(--card-bg);
+        border-radius: 12px;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+        padding: 28px;
+        text-align: center;
+      }
+      h2 {
+        margin: 0 0 8px;
+        font-size: 26px;
+      }
+      p {
+        margin: 8px 0;
+        color: #444;
+        line-height: 1.5;
+      }
+      .muted {
+        color: #666;
+        font-size: 14px;
+      }
+      .place {
+        margin-top: 6px;
+        font-weight: 600;
+      }
+      .count-line {
+        margin-top: 10px;
+        font-weight: 600;
+      }
+      .buttons {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        margin-top: 18px;
+      }
+      .btn {
+        padding: 10px 18px;
+        border-radius: 8px;
+        font-size: 16px;
+        text-decoration: none;
+        color: white;
+        cursor: pointer;
+      }
+      .btn.confirm {
+        background: var(--accent);
+      }
+      .btn.decline {
+        background: var(--danger);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h2>مرحباً <span id="guestSpan">ضيفنا الكريم</span></h2>
+
+        <p class="muted">
+          نتشرف بدعوتكم لحضور حفل زفاف (اسم العريس) و (اسم العروس)
+        </p>
+        <p class="muted">🕗 الوقت: 8 PM</p>
+        <p class="muted">📅 اليوم: الجمعة</p>
+        <p class="place">📍 المكان: فندق ريجنسي</p>
+
+        <p class="count-line">عدد الدعوات: <span id="countSpan">1</span></p>
+
+        <div class="buttons">
+          <a id="confirmBtn" class="btn confirm">تأكيد</a>
+          <a id="declineBtn" class="btn decline">اعتذار</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function sendStatus(status) {
+        // قراءة بيانات الضيف من الرابط
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestId = urlParams.get("guest_id");
+        const codeNumber = urlParams.get("code");
+
+        // إرسال البيانات للـWeb App
+        fetch(
+          "https://script.google.com/macros/s/AKfycbwBXfF-0WNCzU07iQN-yHsfOXc1POu4UIaLUHeUr70NsGousD1TawRQjT5vElH-6kav/exec",
+          {
+            method: "POST",
+            body: JSON.stringify({ guestId, codeNumber, status }),
+            headers: { "Content-Type": "application/json" },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => alert("تم تسجيل اختيارك بنجاح!"))
+          .catch((err) => console.error(err));
+      }
+    </script>
+  </body>
+</html>
