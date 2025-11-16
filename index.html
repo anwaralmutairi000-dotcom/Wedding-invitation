@@ -102,25 +102,53 @@
     </div>
 
     <script>
-      function sendStatus(status) {
-        // قراءة بيانات الضيف من الرابط
-        const urlParams = new URLSearchParams(window.location.search);
-        const guestId = urlParams.get("guest_id");
-        const codeNumber = urlParams.get("code");
+      <<<<<<< HEAD
+            function sendStatus(status) {
+              // قراءة بيانات الضيف من الرابط
+              const urlParams = new URLSearchParams(window.location.search);
+              const guestId = urlParams.get("guest_id");
+              const codeNumber = urlParams.get("code");
 
-        // إرسال البيانات للـWeb App
-        fetch(
-          "https://script.google.com/macros/s/AKfycbwBXfF-0WNCzU07iQN-yHsfOXc1POu4UIaLUHeUr70NsGousD1TawRQjT5vElH-6kav/exec",
-          {
-            method: "POST",
-            body: JSON.stringify({ guestId, codeNumber, status }),
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => alert("تم تسجيل اختيارك بنجاح!"))
-          .catch((err) => console.error(err));
-      }
+              // إرسال البيانات للـWeb App
+              fetch(
+                "https://script.google.com/macros/s/AKfycbwBXfF-0WNCzU07iQN-yHsfOXc1POu4UIaLUHeUr70NsGousD1TawRQjT5vElH-6kav/exec",
+                {
+                  method: "POST",
+                  body: JSON.stringify({ guestId, codeNumber, status }),
+                  headers: { "Content-Type": "application/json" },
+                }
+              )
+                .then((res) => res.json())
+                .then((data) => alert("تم تسجيل اختيارك بنجاح!"))
+                .catch((err) => console.error(err));
+            }
+      =======
+            (function () {
+              // نخلّيهم ثابتين الآن
+              const url = new URL(window.location.href);
+              const guest = url.searchParams.get("guest") || "ضيفنا الكريم";
+              const count = url.searchParams.get("count") || "3";
+
+              document.getElementById("guestSpan").textContent = guest;
+              document.getElementById("countSpan").textContent = count;
+
+              // زر التأكيد → صفحة الباركود
+              document.getElementById("confirmBtn").onclick = function () {
+                const g = encodeURIComponent(guest);
+                const c = encodeURIComponent(count);
+                window.location.href =
+                  "barcode.html?status=confirmed&guest=" + g + "&count=" + c;
+              };
+
+              // زر الاعتذار → نفس صفحة الباركود لكن بدون QR
+              document.getElementById("declineBtn").onclick = function () {
+                const g = encodeURIComponent(guest);
+                const c = encodeURIComponent(count);
+                window.location.href =
+                  "barcode.html?status=declined&guest=" + g + "&count=" + c;
+              };
+            })();
+      >>>>>>> bddd0134c022a99ead4f0b436768ebe14c6a345a
     </script>
   </body>
 </html>
